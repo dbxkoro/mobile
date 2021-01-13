@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.bns.mobile.presenter.screens.validator.ValidatorScreen"
+        android:label="SplashScreen" >
+        <action
+            android:id="@+id/validToOnBoarding"
+            app:destination="@id/onBoardingScreen"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/validToOnDashboard"
+            app:destination="@id/dashboardScreen"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingScreen"
+        android:name="com.bns.mobile.presenter.screens.boarding.BoardingScreen"
+        android:label="OnBoardingScreen" >
+        <action
+            android:id="@+id/goToLogin"
+            app:destination="@id/loginScreen" />
+        <action
+            android:id="@+id/goToRegistration"
+            app:destination="@id/registrationScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardScreen"
+        android:name="com.bns.mobile.presenter.screens.dashboard.DashboardScreen"
+        android:label="DashboardScreen" />
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.bns.mobile.presenter.screens.login.LoginScreen"
+        android:label="LoginScreen" >
+        <action
+            android:id="@+id/action_loginScreen_to_dashboardScreen"
+            app:destination="@id/dashboardScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationScreen"
+        android:name="com.bns.mobile.presenter.screens.registration.RegistrationScreen"
+        android:label="RegistrationScreen" />
+</navigation>
