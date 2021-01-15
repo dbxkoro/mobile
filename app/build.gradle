@@ -81,6 +81,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
+    def interceptor = "4.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor"
+
     def hilt = "2.28-alpha"
     implementation "com.google.dagger:hilt-android:$hilt"
     kapt "com.google.dagger:hilt-android-compiler:$hilt"

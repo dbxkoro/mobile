@@ -25,6 +25,7 @@ class ProxyRepositoryBuilder (
                 }
                 override fun onResponse(call: Call<ProxyDtoResponse>, response: Response<ProxyDtoResponse>) {
                     val body = mapper.mapToDomain(model = response.body())
+                    println("URL Repo Builder Response :: ${response.errorBody()?.string()}")
                     onResult(body)
                 }
             }

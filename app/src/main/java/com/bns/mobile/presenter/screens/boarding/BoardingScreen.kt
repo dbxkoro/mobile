@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.background
 import com.bns.mobile.presenter.widget.Button
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.bns.mobile.R
@@ -65,21 +67,26 @@ class BoardingScreen : Fragment() {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         }) {
-                        button.CustomButton(
-                            type = "basic",
-                            label = "DAFTAR SEKARANG",
-                            onClick = {
-                                findNavController().navigate(R.id.goToRegistration)
-                            }
-                        )
+                        Button(
+                                onClick = {
+                                    findNavController().navigate(R.id.goToRegistration)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "DAFTAR SEKARANG", fontSize = 21.sp)
+                        }
                         Spacer(modifier = Modifier.height(24.dp))
-                        button.CustomButton(
-                            type = "transparent",
-                            label ="MASUK",
-                            onClick = {
-                            findNavController().navigate(R.id.goToLogin)
-                        })
+                        Button(
+                                onClick = {
+                                    findNavController().navigate(R.id.goToLogin)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "MASUK", fontSize = 21.sp)
+                        }
                     }
+
+
 
                     Box(modifier =  Modifier.padding(horizontal = 16.dp)
                         .constrainAs(policy) {
