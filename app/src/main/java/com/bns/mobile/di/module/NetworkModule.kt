@@ -1,20 +1,14 @@
 package com.bns.mobile.di.module
 
 
-import com.bns.mobile.network.mapper.AuthDtoMapper
-import com.bns.mobile.network.mapper.BalanceDtoMapper
-import com.bns.mobile.network.mapper.KeyDtoMapper
-import com.bns.mobile.network.mapper.ProxyDtoMapper
-import com.bns.mobile.network.services.AuthService
-import com.bns.mobile.network.services.BalanceService
-import com.bns.mobile.network.services.KeyServerService
-import com.bns.mobile.network.services.ProxyService
+import com.bns.mobile.network.mapper.*
+import com.bns.mobile.network.mapper.ProvinceDtoMapper
+import com.bns.mobile.network.services.*
 import com.bns.mobile.presenter.BaseApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -85,6 +79,25 @@ object NetworkModule {
         return provideRetrofit(BaseApplication.api_url).create(BalanceService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideUserInfo() : UserService {
+        return provideRetrofit(BaseApplication.api_url).create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideListProvince() : ProvinceService {
+        return provideRetrofit(BaseApplication.api_url).create(ProvinceService::class.java)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideListCity() : CityService {
+        return provideRetrofit(BaseApplication.api_url).create(CityService::class.java)
+    }
+
 
     //MAPPER
     @Singleton
@@ -109,6 +122,24 @@ object NetworkModule {
     @Provides
     fun provideBalanceMapper(): BalanceDtoMapper {
         return BalanceDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserMapper(): UserDtoMapper {
+        return UserDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideListProvinceMapper(): ProvinceDtoMapper {
+        return ProvinceDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideListCityMapper(): CityDtoMapper {
+        return CityDtoMapper()
     }
 
 }

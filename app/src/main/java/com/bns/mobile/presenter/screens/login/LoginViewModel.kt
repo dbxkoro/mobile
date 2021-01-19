@@ -48,7 +48,7 @@ constructor(
     val authResponse : MutableState<Auth> = mutableStateOf(Auth())
 
 
-    private fun generateKey() {
+    fun generateKey() {
         rsaKeypair = if (helper.hasMarshmallow()) {
             rsa.createAsymmetricKeyPair()
             rsa.getAsymmetricKeyPair()!!
@@ -59,24 +59,26 @@ constructor(
 
     private fun getKey() : String {
         rsaKeypair = rsa.getAsymmetricKeyPair()!!
-        val encodedPublicKey: ByteArray = rsaKeypair.public.encoded
-        val publicKeyString = Base64.encodeToString(encodedPublicKey, Base64.DEFAULT)
-        val beginPem = "-----BEGIN RSA PUBLIC KEY-----\n"
-        val endPem = "-----END RSA PUBLIC KEY-----"
-        val pemFile = "$beginPem$publicKeyString$endPem"
-        return Base64.encodeToString(pemFile.toByteArray(), Base64.DEFAULT)
+        var key : String? =  null
+        try {
+                val encodedPublicKey: ByteArray = rsaKeypair.public.encoded
+                val publicKeyString = Base64.encodeToString(encodedPublicKey, Base64.DEFAULT)
+                val beginPem = "-----BEGIN RSA PUBLIC KEY-----\n"
+                val endPem = "-----END RSA PUBLIC KEY-----"
+                val pemFile = "$beginPem$publicKeyString$endPem"
+                key = Base64.encodeToString(pemFile.toByteArray(), Base64.DEFAULT)
+        } catch (e : IOException) {
+            e.printStackTrace()
+        }
+        return key!!
     }
 
     fun proceedLogin(id: String, pw: String) {
         isLoading.value = true
-        Timer("Generate Key", false)
-                .schedule(1000){
-                    generateKey()
-                }
+
         if (publicKeyServer == null) {
             requestKey(id)
         }
-        authResponse.value = Auth()
         Timer("Proceed Login", false)
             .schedule(1000) {
                 onLogin(id, pw)
@@ -170,9 +172,8 @@ constructor(
                         BaseApplication.sessionId = it?.sessionId!!
                     }
                     isLoading.value = false
-
                 }
-
+                authResponse.value = Auth()
             } catch (e: IOException) {
                 e.printStackTrace()
             }

@@ -26,6 +26,12 @@
             app:popUpTo="@+id/main_graph"
             app:popUpToInclusive="true"
             />
+
+<!--    remove this after developing onboard   -->
+        <action
+            android:id="@+id/toRegisteration"
+            app:destination="@id/registrationScreen" />
+
     </fragment>
     <fragment
         android:id="@+id/onBoardingScreen"

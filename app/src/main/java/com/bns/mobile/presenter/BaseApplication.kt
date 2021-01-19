@@ -10,4 +10,6 @@ class BaseApplication: Application(){
         var proxy_url : String = "http://34.101.141.239:9099/"
         var sessionId : String = "7ede36addce3ad22f60271497b03e3a4578591a2"
     }
+
+
 }

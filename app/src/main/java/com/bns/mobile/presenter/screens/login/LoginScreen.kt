@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -32,6 +33,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginScreen : Fragment() {
 
     private val viewModel : LoginViewModel by viewModels()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.generateKey()
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -80,12 +87,12 @@ class LoginScreen : Fragment() {
 
                     if (isLoading) {
                         LinearProgressIndicator(modifier = Modifier
-                                .fillMaxWidth()
-                                .constrainAs(loadingBar) {
-                                    top.linkTo(parent.top)
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                })
+                            .fillMaxWidth()
+                            .constrainAs(loadingBar) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            })
                     }
 
                     Column(
