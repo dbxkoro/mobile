@@ -58,7 +58,7 @@ constructor(
                 idPartner,
                 timestamp,
                 signature,
-                "11"
+                "12"
         )
 
         viewModelScope.launch {
