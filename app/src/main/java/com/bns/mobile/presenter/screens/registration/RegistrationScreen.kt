@@ -64,22 +64,29 @@ class RegistrationScreen : Fragment() {
                   }
 
                   val incomes = viewModel.listIncome.value
-
+                  val industrial = viewModel.listIndustrial.value
                       LazyColumn{
-                          itemsIndexed(items = incomes.income){
-                              index, item -> Text(text = "$index. ${item.income}")
+                          itemsIndexed(items = industrial?.industrialSector!!){
+                              index, item -> Text(text = "${index + 1}. ${item.industrialSector}")
                           }
                       }
 
                       Button(onClick = {
 //                          check
 //                          viewModel.getListProvince()
+
 //                          check
 //                          viewModel.getListCity("11")
+
 //                          check
 //                          viewModel.getListDegree()
+
 //                          check
 //                          viewModel.getListIncome()
+
+//                          check
+//                          viewModel.getListIndustry()
+
                       },
                           shape = RoundedCornerShape(24),
                           modifier = Modifier

@@ -109,6 +109,12 @@ object NetworkModule {
         return provideRetrofit(BaseApplication.api_url).create(IncomeService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideListIndustry() : IndustryService {
+        return provideRetrofit(BaseApplication.api_url).create(IndustryService::class.java)
+    }
+
 
     //MAPPER
     @Singleton
@@ -163,6 +169,12 @@ object NetworkModule {
     @Provides
     fun provideIncomeListMapper(): IncomeDtoMapper {
         return IncomeDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideIndustryListMapper(): IndustryDtoMapper {
+        return IndustryDtoMapper()
     }
 
 }

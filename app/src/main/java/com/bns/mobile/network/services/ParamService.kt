@@ -38,3 +38,11 @@ interface IncomeService {
                     @Body requestList: ParamsDtoRequest
     ) : Call<IncomeListDtoResponse>
 }
+
+interface IndustryService {
+    @Headers("Content-Type: application/json")
+    @POST("param/listindustrialsector")
+    fun getListSector(@Header("SessionId") sessionId : String,
+                    @Body requestList: ParamsDtoRequest
+    ) : Call<IndustryListDtoResponse>
+}

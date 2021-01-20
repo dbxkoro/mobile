@@ -7,15 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bns.mobile.domain.model.CityList
-import com.bns.mobile.domain.model.DegreeList
-import com.bns.mobile.domain.model.IncomeList
-import com.bns.mobile.domain.model.ProvinceList
+import com.bns.mobile.domain.model.*
 import com.bns.mobile.network.model.params.CityListDtoRequest
 import com.bns.mobile.network.model.params.ParamsDtoRequest
 import com.bns.mobile.repository.city.CityRepository
 import com.bns.mobile.repository.degree.DegreeRepository
 import com.bns.mobile.repository.income.IncomeRepository
+import com.bns.mobile.repository.industrial.IndustrialRepository
 import com.bns.mobile.repository.province.ProvinceRepository
 import com.bns.mobile.utils.Helper
 import kotlinx.coroutines.launch
@@ -26,7 +24,8 @@ constructor(
     private val province : ProvinceRepository,
     private val city : CityRepository,
     private val degree : DegreeRepository,
-    private val income : IncomeRepository
+    private val income : IncomeRepository,
+    private val industry : IndustrialRepository,
 ) : ViewModel()
 {
     private val helper = Helper
@@ -34,6 +33,7 @@ constructor(
     var listCity: MutableState<CityList> = mutableStateOf(CityList())
     var listDegree: MutableState<DegreeList> = mutableStateOf(DegreeList())
     var listIncome: MutableState<IncomeList> = mutableStateOf(IncomeList())
+    var listIndustrial: MutableState<IndustryList> = mutableStateOf(IndustryList())
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getListProvince() {
@@ -118,6 +118,28 @@ constructor(
                 if (it?.responseCode == "00") {
                     listIncome.value = it
                     println("LIST INCOME VM :: $it")
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getListIndustry() {
+        val idPartner = "Partner-001"
+        val timestamp = helper.getCurrentTime()
+        val signature = helper.createSignature(idPartner, timestamp)
+
+        val requestParam = ParamsDtoRequest(
+                idPartner,
+                timestamp,
+                signature,
+        )
+
+        viewModelScope.launch {
+            industry.getSectorList(requestParam) {
+                if (it?.responseCode == "00") {
+                    listIndustrial.value = it
+                    println("LIST INDUSTRIAL VM :: $it")
                 }
             }
         }

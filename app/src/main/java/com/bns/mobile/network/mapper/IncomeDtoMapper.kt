@@ -8,7 +8,7 @@ class IncomeDtoMapper : DomainMapper<IncomeListDtoResponse, IncomeList> {
     override fun mapToDomain(model: IncomeListDtoResponse?): IncomeList {
        return IncomeList(
                responseCode = model?.responseCode,
-               income = model?.income!!
+               income = model?.income
        )
     }
 

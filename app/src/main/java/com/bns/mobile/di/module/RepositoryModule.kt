@@ -13,6 +13,8 @@ import com.bns.mobile.repository.degree.DegreeRepository
 import com.bns.mobile.repository.degree.DegreeRepositoryBuilder
 import com.bns.mobile.repository.income.IncomeRepository
 import com.bns.mobile.repository.income.IncomeRepositoryBuilder
+import com.bns.mobile.repository.industrial.IndustrialRepository
+import com.bns.mobile.repository.industrial.IndustrialRepositoryBuilder
 import com.bns.mobile.repository.province.ProvinceRepository
 import com.bns.mobile.repository.province.ProvinceRepositoryBuilder
 import com.bns.mobile.repository.proxy.ProxyRepository
@@ -136,6 +138,18 @@ object RepositoryModule {
         return IncomeRepositoryBuilder(
             service = incomeService,
             mapper = incomeDtoMapper,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideIndustrialRepository(
+        industryService: IndustryService,
+        industryDtoMapper: IndustryDtoMapper
+    ): IndustrialRepository {
+        return IndustrialRepositoryBuilder(
+            service = industryService,
+            mapper = industryDtoMapper,
         )
     }
 
