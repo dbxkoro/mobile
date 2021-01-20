@@ -2,8 +2,8 @@ package com.bns.mobile.repository.city
 
 import com.bns.mobile.domain.model.CityList
 import com.bns.mobile.network.mapper.CityDtoMapper
-import com.bns.mobile.network.model.city.CityListDtoRequest
-import com.bns.mobile.network.model.city.CityListDtoResponse
+import com.bns.mobile.network.model.params.CityListDtoRequest
+import com.bns.mobile.network.model.params.CityListDtoResponse
 import com.bns.mobile.network.services.CityService
 import com.bns.mobile.presenter.BaseApplication
 import com.google.gson.Gson

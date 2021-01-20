@@ -1,4 +1,4 @@
-package com.bns.mobile.network.model.province
+package com.bns.mobile.network.model.params
 
 import com.bns.mobile.domain.model.Province
 import com.google.gson.annotations.SerializedName

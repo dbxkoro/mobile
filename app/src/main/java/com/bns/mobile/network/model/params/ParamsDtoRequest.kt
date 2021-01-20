@@ -1,8 +1,8 @@
-package com.bns.mobile.network.model.province
+package com.bns.mobile.network.model.params
 
 import com.google.gson.annotations.SerializedName
 
-data class ProvinceListDtoRequest (
+data class ParamsDtoRequest (
     @SerializedName("PartnerID")
     var PartnerId: String? = null,
     @SerializedName("RequestTimestamp")

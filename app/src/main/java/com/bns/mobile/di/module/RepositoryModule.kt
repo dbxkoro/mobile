@@ -9,6 +9,10 @@ import com.bns.mobile.repository.balance.BalanceRepository
 import com.bns.mobile.repository.balance.BalanceRepositoryBuilder
 import com.bns.mobile.repository.city.CityRepository
 import com.bns.mobile.repository.city.CityRepositoryBuilder
+import com.bns.mobile.repository.degree.DegreeRepository
+import com.bns.mobile.repository.degree.DegreeRepositoryBuilder
+import com.bns.mobile.repository.income.IncomeRepository
+import com.bns.mobile.repository.income.IncomeRepositoryBuilder
 import com.bns.mobile.repository.province.ProvinceRepository
 import com.bns.mobile.repository.province.ProvinceRepositoryBuilder
 import com.bns.mobile.repository.proxy.ProxyRepository
@@ -108,6 +112,30 @@ object RepositoryModule {
         return CityRepositoryBuilder(
             service = cityService,
             mapper = cityDtoMapper,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideDegreeRepository(
+        degreeService: DegreeService,
+        degreeDtoMapper: DegreeDtoMapper
+    ): DegreeRepository {
+        return DegreeRepositoryBuilder(
+            service = degreeService,
+            mapper = degreeDtoMapper,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideIncomeRepository(
+        incomeService: IncomeService,
+        incomeDtoMapper: IncomeDtoMapper
+    ): IncomeRepository {
+        return IncomeRepositoryBuilder(
+            service = incomeService,
+            mapper = incomeDtoMapper,
         )
     }
 

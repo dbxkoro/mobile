@@ -91,11 +91,22 @@ object NetworkModule {
         return provideRetrofit(BaseApplication.api_url).create(ProvinceService::class.java)
     }
 
-
     @Singleton
     @Provides
     fun provideListCity() : CityService {
         return provideRetrofit(BaseApplication.api_url).create(CityService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideListDegree() : DegreeService {
+        return provideRetrofit(BaseApplication.api_url).create(DegreeService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideListIncome() : IncomeService {
+        return provideRetrofit(BaseApplication.api_url).create(IncomeService::class.java)
     }
 
 
@@ -140,6 +151,18 @@ object NetworkModule {
     @Provides
     fun provideListCityMapper(): CityDtoMapper {
         return CityDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDegreeListMapper(): DegreeDtoMapper {
+        return DegreeDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideIncomeListMapper(): IncomeDtoMapper {
+        return IncomeDtoMapper()
     }
 
 }

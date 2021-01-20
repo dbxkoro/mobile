@@ -8,10 +8,14 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bns.mobile.domain.model.CityList
+import com.bns.mobile.domain.model.DegreeList
+import com.bns.mobile.domain.model.IncomeList
 import com.bns.mobile.domain.model.ProvinceList
-import com.bns.mobile.network.model.city.CityListDtoRequest
-import com.bns.mobile.network.model.province.ProvinceListDtoRequest
+import com.bns.mobile.network.model.params.CityListDtoRequest
+import com.bns.mobile.network.model.params.ParamsDtoRequest
 import com.bns.mobile.repository.city.CityRepository
+import com.bns.mobile.repository.degree.DegreeRepository
+import com.bns.mobile.repository.income.IncomeRepository
 import com.bns.mobile.repository.province.ProvinceRepository
 import com.bns.mobile.utils.Helper
 import kotlinx.coroutines.launch
@@ -21,11 +25,15 @@ class RegisterationViewModel
 constructor(
     private val province : ProvinceRepository,
     private val city : CityRepository,
+    private val degree : DegreeRepository,
+    private val income : IncomeRepository
 ) : ViewModel()
 {
     private val helper = Helper
     var listProvince: MutableState<ProvinceList> = mutableStateOf(ProvinceList())
     var listCity: MutableState<CityList> = mutableStateOf(CityList())
+    var listDegree: MutableState<DegreeList> = mutableStateOf(DegreeList())
+    var listIncome: MutableState<IncomeList> = mutableStateOf(IncomeList())
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getListProvince() {
@@ -33,7 +41,7 @@ constructor(
         val timestamp = helper.getCurrentTime()
         val signature = helper.createSignature(idPartner, timestamp)
 
-        val requestParam = ProvinceListDtoRequest(
+        val requestParam = ParamsDtoRequest(
             idPartner,
             timestamp,
             signature,
@@ -49,7 +57,7 @@ constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getListCity() {
+    fun getListCity(provinceId : String) {
         val idPartner = "Partner-001"
         val timestamp = helper.getCurrentTime()
         val signature = helper.createSignature(idPartner, timestamp)
@@ -58,7 +66,7 @@ constructor(
                 idPartner,
                 timestamp,
                 signature,
-                "11"
+                provinceId
         )
 
         viewModelScope.launch {
@@ -66,6 +74,50 @@ constructor(
                 if (it?.responseCode == "00") {
                     listCity.value = it
                     println("LIST CITY VM :: $it")
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getListDegree() {
+        val idPartner = "Partner-001"
+        val timestamp = helper.getCurrentTime()
+        val signature = helper.createSignature(idPartner, timestamp)
+
+        val requestParam = ParamsDtoRequest(
+                idPartner,
+                timestamp,
+                signature,
+        )
+
+        viewModelScope.launch {
+            degree.getDegreeList(requestParam) {
+                if (it?.responseCode == "00") {
+                    listDegree.value = it
+                    println("LIST Degree VM :: $it")
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getListIncome() {
+        val idPartner = "Partner-001"
+        val timestamp = helper.getCurrentTime()
+        val signature = helper.createSignature(idPartner, timestamp)
+
+        val requestParam = ParamsDtoRequest(
+                idPartner,
+                timestamp,
+                signature,
+        )
+
+        viewModelScope.launch {
+            income.getIncomeList(requestParam) {
+                if (it?.responseCode == "00") {
+                    listIncome.value = it
+                    println("LIST INCOME VM :: $it")
                 }
             }
         }

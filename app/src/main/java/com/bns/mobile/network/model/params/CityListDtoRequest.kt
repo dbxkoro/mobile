@@ -1,4 +1,4 @@
-package com.bns.mobile.network.model.city
+package com.bns.mobile.network.model.params
 
 import com.google.gson.annotations.SerializedName
 
