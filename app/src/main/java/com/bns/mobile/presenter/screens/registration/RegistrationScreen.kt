@@ -60,7 +60,7 @@ class RegistrationScreen : Fragment() {
                       Text(text = "Yang perlu kamu\nketahui" , style = MaterialTheme.typography.h4.merge(
                           SpanStyle(fontWeight = FontWeight.Bold)
                       ))
-                      Text("buka rekening 5 menit jadi, gasskeun cuy", modifier = Modifier.padding(vertical = 8.dp))
+                      Text("buka rekening 5 menit jadi, gaskeun cuy", modifier = Modifier.padding(vertical = 8.dp))
                   }
 
                   val incomes = viewModel.listIncome.value
