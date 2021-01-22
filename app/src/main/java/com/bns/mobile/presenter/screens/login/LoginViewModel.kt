@@ -17,6 +17,7 @@ import com.bns.mobile.repository.auth.AuthRepository
 import com.bns.mobile.repository.server.KeyRepository
 import com.bns.mobile.utils.Helper
 import com.bns.mobile.utils.RSA
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONException
@@ -29,6 +30,7 @@ import java.security.PublicKey
 import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import kotlin.concurrent.schedule
+import kotlin.system.measureTimeMillis
 
 @RequiresApi(Build.VERSION_CODES.O)
 class LoginViewModel
@@ -76,12 +78,11 @@ constructor(
     fun proceedLogin(id: String, pw: String) {
         isLoading.value = true
 
-        if (publicKeyServer == null) {
-            requestKey(id)
-        }
-        Timer("Proceed Login", false)
-            .schedule(1000) {
-                onLogin(id, pw)
+        viewModelScope.launch {
+            async { generateKey() }.await()
+            async { requestKey(id)  }.await()
+            delay(1000)
+            onLogin(id, pw)
         }
     }
 
@@ -101,16 +102,12 @@ constructor(
                 PublicKey = pbKey,
         )
         viewModelScope.launch{
-            try {
                 keyServer.getKeyServer(keyRequestParams) {
                     if(it?.publicKey != null) {
                         publicKeyServer = getPublicKeyServer(it.publicKey)
                     }
                     println("Key Response :: $it")
                 }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
         }
     }
 
@@ -163,8 +160,6 @@ constructor(
                 id
         )
         viewModelScope.launch {
-            try {
-                // TODO: 07/01/21 Save SessionId to Global Persistance
                 auth.login(loginParams) {
                     authResponse.value = it!!
                     if(authResponse.value.responseCode == "00") {
@@ -173,10 +168,8 @@ constructor(
                     }
                     isLoading.value = false
                 }
-                authResponse.value = Auth()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+            delay(1000)
+            authResponse.value = Auth()
         }
     }
 

@@ -2,7 +2,6 @@ package com.bns.mobile.di.module
 
 
 import com.bns.mobile.network.mapper.*
-import com.bns.mobile.network.mapper.ProvinceDtoMapper
 import com.bns.mobile.network.services.*
 import com.bns.mobile.presenter.BaseApplication
 import dagger.Module
@@ -115,6 +114,24 @@ object NetworkModule {
         return provideRetrofit(BaseApplication.api_url).create(IndustryService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideListPurpose() : PurposeService {
+        return provideRetrofit(BaseApplication.api_url).create(PurposeService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideListSourceIncome() : SourceIncomeService {
+        return provideRetrofit(BaseApplication.api_url).create(SourceIncomeService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideListWork() : TypeWorkService {
+        return provideRetrofit(BaseApplication.api_url).create(TypeWorkService::class.java)
+    }
+
 
     //MAPPER
     @Singleton
@@ -149,32 +166,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideListProvinceMapper(): ProvinceDtoMapper {
-        return ProvinceDtoMapper()
+    fun provideParamsMapper(): ParamsDtoMapper {
+        return ParamsDtoMapper()
     }
 
-    @Singleton
-    @Provides
-    fun provideListCityMapper(): CityDtoMapper {
-        return CityDtoMapper()
-    }
-
-    @Singleton
-    @Provides
-    fun provideDegreeListMapper(): DegreeDtoMapper {
-        return DegreeDtoMapper()
-    }
-
-    @Singleton
-    @Provides
-    fun provideIncomeListMapper(): IncomeDtoMapper {
-        return IncomeDtoMapper()
-    }
-
-    @Singleton
-    @Provides
-    fun provideIndustryListMapper(): IndustryDtoMapper {
-        return IndustryDtoMapper()
-    }
 
 }

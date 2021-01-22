@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
     app:startDestination="@id/splashScreen">
 
@@ -29,7 +30,7 @@
 
 <!--    remove this after developing onboard   -->
         <action
-            android:id="@+id/toRegisteration"
+            android:id="@+id/ToRegistration"
             app:destination="@id/registrationScreen" />
 
     </fragment>
@@ -68,6 +69,30 @@
     </fragment>
     <fragment
         android:id="@+id/registrationScreen"
-        android:name="com.bns.mobile.presenter.screens.registration.RegistrationScreen"
-        android:label="RegistrationScreen" />
+        android:name="com.bns.mobile.presenter.screens.onboarding.LandingScreen"
+        android:label="RegistrationScreen" >
+        <action
+            android:id="@+id/toPurposeScreen"
+            app:destination="@id/PurposeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/PurposeScreen"
+        android:name="com.bns.mobile.presenter.screens.onboarding.PurposeScreen"
+        android:label="PurposeScreen" >
+        <action
+            android:id="@+id/toIncomeScreen"
+            app:destination="@id/incomeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeScreen"
+        android:name="com.bns.mobile.presenter.screens.onboarding.IncomeScreen"
+        android:label="IncomeScreen" >
+        <action
+            android:id="@+id/toSourceIncomeScreen"
+            app:destination="@id/sourceIncomeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sourceIncomeScreen"
+        android:name="com.bns.mobile.presenter.screens.onboarding.SourceIncomeScreen"
+        android:label="SourceIncomeScreen" />
 </navigation>

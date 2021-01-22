@@ -12,7 +12,7 @@ interface ProvinceService {
     @POST("param/listprovince")
     fun getListProvince(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ProvinceListDtoResponse>
+    ) : Call<ParamsDtoResponse>
 }
 
 interface CityService {
@@ -20,7 +20,7 @@ interface CityService {
     @POST("param/listcity")
     fun getListCity(@Header("SessionId") sessionId : String,
                     @Body requestList: CityListDtoRequest
-    ) : Call<CityListDtoResponse>
+    ) : Call<ParamsDtoResponse>
 }
 
 interface DegreeService {
@@ -28,7 +28,7 @@ interface DegreeService {
     @POST("param/listdegree")
     fun getListCity(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<DegreeListDtoResponse>
+    ) : Call<ParamsDtoResponse>
 }
 
 interface IncomeService {
@@ -36,7 +36,7 @@ interface IncomeService {
     @POST("param/listincome")
     fun getListIncome(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<IncomeListDtoResponse>
+    ) : Call<ParamsDtoResponse>
 }
 
 interface IndustryService {
@@ -44,5 +44,29 @@ interface IndustryService {
     @POST("param/listindustrialsector")
     fun getListSector(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<IndustryListDtoResponse>
+    ) : Call<ParamsDtoResponse>
+}
+
+interface PurposeService {
+    @Headers("Content-Type: application/json")
+    @POST("param/listopeningpurpose")
+    fun getListPurpose(@Header("SessionId") sessionId : String,
+                    @Body requestList: ParamsDtoRequest
+    ) : Call<ParamsDtoResponse>
+}
+
+interface SourceIncomeService {
+    @Headers("Content-Type: application/json")
+    @POST("param/listsourceincome")
+    fun getListSourceIncome(@Header("SessionId") sessionId : String,
+                    @Body requestList: ParamsDtoRequest
+    ) : Call<ParamsDtoResponse>
+}
+
+interface TypeWorkService {
+    @Headers("Content-Type: application/json")
+    @POST("param/listtypeofwork")
+    fun getListWork(@Header("SessionId") sessionId : String,
+                    @Body requestList: ParamsDtoRequest
+    ) : Call<ParamsDtoResponse>
 }

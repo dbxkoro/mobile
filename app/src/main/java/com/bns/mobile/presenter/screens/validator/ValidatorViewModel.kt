@@ -71,7 +71,7 @@ constructor(
 
         }
     }
-//
+
 //    private fun setUrlPersistance(url : String?, urlUpdate : String?) {
 //        prefs.setPrefString(BNS_URL_UPDATED, urlUpdate)
 //        prefs.setPrefString(BNS_URL, url)

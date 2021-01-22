@@ -86,8 +86,9 @@ class ValidatorScreen : Fragment() {
              findNavController().navigate(R.id.skipToDashboard)
          }
          false -> {
-//             findNavController().navigate(R.id.onBoardingScreen)
-             findNavController().navigate(R.id.toRegisteration)
+             findNavController().navigate(R.id.onBoardingScreen)
+//             findNavController().navigate(R.id.ToRegistration)
+//             findNavController().navigate(R.id.directPurposeScreen)
          }
          else -> {
              println("no nothing jon snow")

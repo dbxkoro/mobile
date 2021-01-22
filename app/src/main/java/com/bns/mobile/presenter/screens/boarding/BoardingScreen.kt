@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.foundation.background
 import com.bns.mobile.presenter.widget.Button
 import androidx.compose.foundation.layout.*
@@ -19,19 +18,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.bns.mobile.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BoardingScreen : Fragment() {
-    @ExperimentalMaterialApi
-    @ExperimentalLayout
+    private val viewModel : BoardingViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        val button = Button
 
          return ComposeView(requireContext()).apply {
             setContent {

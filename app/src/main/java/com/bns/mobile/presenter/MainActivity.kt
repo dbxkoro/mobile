@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
 //    lateinit var handler: Handler
 //    lateinit var runnable: Runnable
 
-    @Inject
-    lateinit var prefs : PreferenceProvide
+//    @Inject
+//    lateinit var prefs : PreferenceProvide
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

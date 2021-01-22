@@ -2,9 +2,6 @@
     <string name="app_name">BNS Mobile</string>
     <string name="update_title_dialog">Version Update</string>
     <string name="session_expired_title">Session Expired</string>
-    <string name="bns_api_address">BNS-API-ADDRESS</string>
     <string name="btn_yes">Yes</string>
-    <string name="btn_login">Login</string>
     <string name="btn_no">No</string>
-    <string name="btn_skip">Skip</string>
 </resources>

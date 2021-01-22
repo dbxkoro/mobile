@@ -1,26 +1,31 @@
 package com.bns.mobile.di.module
 
 import com.bns.mobile.network.mapper.*
-import com.bns.mobile.network.mapper.ProvinceDtoMapper
 import com.bns.mobile.network.services.*
 import com.bns.mobile.repository.auth.AuthRepository
 import com.bns.mobile.repository.auth.AuthRepositoryBuilder
 import com.bns.mobile.repository.balance.BalanceRepository
 import com.bns.mobile.repository.balance.BalanceRepositoryBuilder
-import com.bns.mobile.repository.city.CityRepository
-import com.bns.mobile.repository.city.CityRepositoryBuilder
-import com.bns.mobile.repository.degree.DegreeRepository
-import com.bns.mobile.repository.degree.DegreeRepositoryBuilder
-import com.bns.mobile.repository.income.IncomeRepository
-import com.bns.mobile.repository.income.IncomeRepositoryBuilder
-import com.bns.mobile.repository.industrial.IndustrialRepository
-import com.bns.mobile.repository.industrial.IndustrialRepositoryBuilder
-import com.bns.mobile.repository.province.ProvinceRepository
-import com.bns.mobile.repository.province.ProvinceRepositoryBuilder
+import com.bns.mobile.repository.params.city.CityRepository
+import com.bns.mobile.repository.params.city.CityRepositoryBuilder
+import com.bns.mobile.repository.params.degree.DegreeRepository
+import com.bns.mobile.repository.params.degree.DegreeRepositoryBuilder
+import com.bns.mobile.repository.params.income.IncomeRepository
+import com.bns.mobile.repository.params.income.IncomeRepositoryBuilder
+import com.bns.mobile.repository.params.industrial.IndustrialRepository
+import com.bns.mobile.repository.params.industrial.IndustrialRepositoryBuilder
+import com.bns.mobile.repository.params.province.ProvinceRepository
+import com.bns.mobile.repository.params.province.ProvinceRepositoryBuilder
 import com.bns.mobile.repository.proxy.ProxyRepository
 import com.bns.mobile.repository.proxy.ProxyRepositoryBuilder
+import com.bns.mobile.repository.params.purpose.PurposeRepository
+import com.bns.mobile.repository.params.purpose.PurposeRepositoryBuilder
 import com.bns.mobile.repository.server.KeyRepository
 import com.bns.mobile.repository.server.KeyRepositoryBuilder
+import com.bns.mobile.repository.params.source.SourceIncomeRepository
+import com.bns.mobile.repository.params.source.SourceIncomeRepositoryBuilder
+import com.bns.mobile.repository.params.typework.TypeWorkRepository
+import com.bns.mobile.repository.params.typework.TypeWorkRepositoryBuilder
 import com.bns.mobile.repository.user.UserRepository
 import com.bns.mobile.repository.user.UserRepositoryBuilder
 import dagger.Module
@@ -97,7 +102,7 @@ object RepositoryModule {
     @Provides
     fun provideProvinceRepository(
         provinceService: ProvinceService,
-        provinceDtoMapper: ProvinceDtoMapper
+        provinceDtoMapper: ParamsDtoMapper
     ): ProvinceRepository {
         return ProvinceRepositoryBuilder(
             service = provinceService,
@@ -109,7 +114,7 @@ object RepositoryModule {
     @Provides
     fun provideCityRepository(
         cityService: CityService,
-        cityDtoMapper: CityDtoMapper
+        cityDtoMapper: ParamsDtoMapper
     ): CityRepository {
         return CityRepositoryBuilder(
             service = cityService,
@@ -121,7 +126,7 @@ object RepositoryModule {
     @Provides
     fun provideDegreeRepository(
         degreeService: DegreeService,
-        degreeDtoMapper: DegreeDtoMapper
+        degreeDtoMapper: ParamsDtoMapper
     ): DegreeRepository {
         return DegreeRepositoryBuilder(
             service = degreeService,
@@ -133,7 +138,7 @@ object RepositoryModule {
     @Provides
     fun provideIncomeRepository(
         incomeService: IncomeService,
-        incomeDtoMapper: IncomeDtoMapper
+        incomeDtoMapper: ParamsDtoMapper
     ): IncomeRepository {
         return IncomeRepositoryBuilder(
             service = incomeService,
@@ -145,11 +150,47 @@ object RepositoryModule {
     @Provides
     fun provideIndustrialRepository(
         industryService: IndustryService,
-        industryDtoMapper: IndustryDtoMapper
+        industryDtoMapper: ParamsDtoMapper
     ): IndustrialRepository {
         return IndustrialRepositoryBuilder(
             service = industryService,
             mapper = industryDtoMapper,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun providePurposeRepository(
+        purposeService: PurposeService,
+        purposeDtoMapper: ParamsDtoMapper
+    ): PurposeRepository {
+        return PurposeRepositoryBuilder(
+            service = purposeService,
+            mapper = purposeDtoMapper,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideSourceRepository(
+       sourceIncomeService: SourceIncomeService,
+       sourceIncomeDtoMapper: ParamsDtoMapper
+    ): SourceIncomeRepository {
+        return SourceIncomeRepositoryBuilder(
+            service = sourceIncomeService,
+            mapper = sourceIncomeDtoMapper,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideWorkRepository(
+       typeWorkService: TypeWorkService,
+       typeWorkDtoMapper: ParamsDtoMapper
+    ): TypeWorkRepository {
+        return TypeWorkRepositoryBuilder(
+            service = typeWorkService,
+            mapper = typeWorkDtoMapper,
         )
     }
 
