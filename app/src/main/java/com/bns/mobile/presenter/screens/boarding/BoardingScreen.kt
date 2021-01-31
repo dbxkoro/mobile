@@ -82,7 +82,7 @@ class BoardingScreen : Fragment() {
                                 },
                                 modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(text = "MASUKK", fontSize = 21.sp)
+                            Text(text = "MASUK", fontSize = 21.sp)
                         }
                     }
 
