@@ -60,10 +60,10 @@ constructor(
                 buildNumber = "0"
         )
         viewModelScope.launch {
-            println("URL Request Params $paramRequest")
             proxy.checkingVersion(paramRequest){
                 if (it != null) {
                     responseProxy.value = it
+                    println("PROXY :: ${responseProxy.value}")
 //                    BaseApplication.api_url = it.url!!
 //                    setUrlPersistance(it.url,it.urlUpdate)
                 }

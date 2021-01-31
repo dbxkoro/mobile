@@ -60,8 +60,8 @@ class DashboardViewModel
                     println("VIEW MODEL BALANCE RESPONSE ${it?.responseCode}")
                     currentBalance.value = it!!
                      when(it?.responseCode) {
-                         "31" -> isExpiredSession()
-                         "00" -> isLoading.value = false
+//                         "31" -> isExpiredSession()
+//                         "00" -> isLoading.value = false
                      }
                 }
             } catch (e: IOException) {

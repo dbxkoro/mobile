@@ -142,8 +142,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideKeyMapper(): KeyDtoMapper {
-        return KeyDtoMapper()
+    fun provideKeyMapper(): ResultDtoMapper {
+        return ResultDtoMapper()
     }
 
     @Singleton
@@ -164,11 +164,6 @@ object NetworkModule {
         return UserDtoMapper()
     }
 
-    @Singleton
-    @Provides
-    fun provideParamsMapper(): ParamsDtoMapper {
-        return ParamsDtoMapper()
-    }
 
 
 }

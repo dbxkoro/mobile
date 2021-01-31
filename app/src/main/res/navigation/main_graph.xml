@@ -27,11 +27,14 @@
             app:popUpTo="@+id/main_graph"
             app:popUpToInclusive="true"
             />
-
-<!--    remove this after developing onboard   -->
         <action
-            android:id="@+id/ToRegistration"
-            app:destination="@id/registrationScreen" />
+            android:id="@+id/directPurpose"
+            app:destination="@id/PurposeScreen" />
+        <action
+            android:id="@+id/directLogin"
+            app:destination="@id/loginScreen" />
+
+        <!--    remove this after developing onboard   -->
 
     </fragment>
     <fragment
@@ -43,7 +46,7 @@
             app:destination="@id/loginScreen" />
         <action
             android:id="@+id/goToRegistration"
-            app:destination="@id/registrationScreen" />
+            app:destination="@id/LandingScreen" />
     </fragment>
     <fragment
         android:id="@+id/dashboardScreen"
@@ -68,12 +71,12 @@
             />
     </fragment>
     <fragment
-        android:id="@+id/registrationScreen"
+        android:id="@+id/LandingScreen"
         android:name="com.bns.mobile.presenter.screens.onboarding.LandingScreen"
-        android:label="RegistrationScreen" >
+        android:label="LandingScreen" >
         <action
-            android:id="@+id/toPurposeScreen"
-            app:destination="@id/PurposeScreen" />
+            android:id="@+id/toEmailValidator"
+            app:destination="@id/EmailValidatorScreen" />
     </fragment>
     <fragment
         android:id="@+id/PurposeScreen"
@@ -95,4 +98,16 @@
         android:id="@+id/sourceIncomeScreen"
         android:name="com.bns.mobile.presenter.screens.onboarding.SourceIncomeScreen"
         android:label="SourceIncomeScreen" />
+    <fragment
+        android:id="@+id/EmailValidatorScreen"
+        android:name="com.bns.mobile.presenter.screens.onboarding.EmailValidatorScreen"
+        android:label="EmailValidatorScreen" >
+        <action
+            android:id="@+id/toOtpValidatorOnBoarding"
+            app:destination="@id/otpValidatorScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpValidatorScreen"
+        android:name="com.bns.mobile.presenter.screens.onboarding.OtpValidatorScreen"
+        android:label="OtpValidatorScreen" />
 </navigation>

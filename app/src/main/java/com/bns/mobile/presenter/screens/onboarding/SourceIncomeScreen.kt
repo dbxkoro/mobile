@@ -44,8 +44,7 @@ class SourceIncomeScreen : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-//                should 0.231f
-                val progress = remember { mutableStateOf(0.154f) }
+                val progress = remember { mutableStateOf(0.231f) }
                 val listSource = viewModel.listSource.value
                 val selectedSource = viewModel.selectedSource.value
 

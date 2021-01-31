@@ -20,7 +20,7 @@ import androidx.navigation.findNavController
 import com.bns.mobile.R
 import com.bns.mobile.presenter.widget.NavigationHeader
 import com.bns.mobile.presenter.widget.ProgressOnboard
-import com.bns.mobile.presenter.widget.components.GridView
+import com.bns.mobile.presenter.widget.components.molecules.GridView
 import com.bns.mobile.presenter.widget.components.atom.GridItem
 import com.bns.mobile.presenter.widget.components.atom.PickIndicator
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +45,7 @@ class PurposeScreen : Fragment() {
             setContent {
                 val listPurpose = viewModel.listPurpose.value
                 val selectedPurpose = viewModel.selectedPurpose.value
-                val progress = remember { mutableStateOf(0f) }
+                val progress = remember { mutableStateOf(0.077f) }
 
                 Column() {
                     NavigationHeader(title = "Tujuan Pembukaan", onBack = { findNavController().navigateUp() })

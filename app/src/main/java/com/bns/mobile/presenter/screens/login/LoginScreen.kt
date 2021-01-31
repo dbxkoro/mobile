@@ -68,21 +68,25 @@ class LoginScreen : Fragment() {
                         Toast.makeText(context, msg, Toast.LENGTH_LONG ).show()
                     }
 
+                    fun invalidUser() {
+                        messageToast("Invalid Username/Password")
+                        clearText()
+                    }
+
                     // TODO: 14/01/21 Go To Dashboard
                     fun goToDashboard() {
                         findNavController().navigate(R.id.goToDashboard)
                     }
 
                     when (auth.responseCode) {
-                        "103" -> messageToast("Invalid Username/Password")
-                        "102" -> messageToast("Invalid Password")
+                        "102" -> invalidUser()
                         "00" -> goToDashboard()
-                        else -> println("ERROR NOT FOUND, CHECK THE LOG")
+                        else -> println("no response code status")
                     }
 
-                    if (auth.sessionId != null) {
-                        messageToast("${auth.sessionId}")
-                    }
+//                    if (auth.sessionId != null) {
+//                        messageToast("${auth.sessionId}")
+//                    }
 
                     if (isLoading) {
                         LinearProgressIndicator(modifier = Modifier

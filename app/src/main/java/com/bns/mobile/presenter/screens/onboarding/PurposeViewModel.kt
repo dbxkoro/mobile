@@ -10,14 +10,15 @@ import androidx.lifecycle.viewModelScope
 import com.bns.mobile.domain.model.Param
 import com.bns.mobile.domain.model.ParamList
 import com.bns.mobile.network.model.params.ParamsDtoRequest
-import com.bns.mobile.repository.params.purpose.PurposeRepository
+import com.bns.mobile.repository.params.ParamRepository
 import com.bns.mobile.utils.Helper
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 class PurposeViewModel
 @ViewModelInject
 constructor(
-        private val purpose : PurposeRepository
+        private val params : ParamRepository
 )
     : ViewModel() {
 
@@ -27,23 +28,23 @@ constructor(
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getListPurpose() {
-        val idPartner = "Partner-001"
-        val timestamp = helper.getCurrentTime()
-        val signature = helper.createSignature(idPartner, timestamp)
-
-        val requestParam = ParamsDtoRequest(
-                idPartner,
-                timestamp,
-                signature,
-        )
-
         viewModelScope.launch {
-            purpose.getPurpose(requestParam) {
+            val idPartner = "Partner-001"
+            val timestamp = helper.getCurrentTime()
+            val signature = helper.createSignature(idPartner, timestamp)
+
+            val requestParam = ParamsDtoRequest(
+                    idPartner,
+                    timestamp,
+                    signature,
+            )
+            params.getPurposeParams(requestParam) {
                 if (it?.responseCode == "00") {
-                    listPurpose.value = it
-                    println("LIST PURPOSE VM :: $it")
+                    val data = Gson().fromJson(it.data.toString(), ParamList::class.java)
+                    listPurpose.value = data
                 }
             }
+
         }
     }
 

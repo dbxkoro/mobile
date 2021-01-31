@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun <T> GridView(
+fun <T> DynamicGridLayout(
         list : List<T> = listOf(),
         space : Dp = 16.dp,
         contentPadding: Dp = 0.dp,
@@ -22,14 +22,16 @@ fun <T> GridView(
     WithConstraints(modifier = Modifier.padding(contentPadding)) {
         val chunked = list.chunked(rows)
         val spacer = space / rows
-        val itemHeight = ((maxWidth / rows) - (spacer * (rows - 1)))
+        val column = chunked.size
+        val itemHeight = ((maxHeight / column) - (spacer * (column - 2)))
+        val itemWidth = ((maxWidth / rows) - (spacer * (rows - 1)))
         LazyColumn(modifier = Modifier){
             itemsIndexed(chunked) { index, item ->
                 val spaceV = index + 1
                 LazyRow(modifier = Modifier.fillMaxWidth()) {
                     itemsIndexed(item) { indexRow, item ->
                         val grid = indexRow + 1
-                        Surface(modifier = Modifier.preferredSize(itemHeight)) {
+                        Surface(modifier = Modifier.preferredWidth(itemWidth).preferredHeight(itemHeight)) {
                             child(item)
                         }
                         if (grid % rows != 0){
@@ -37,7 +39,7 @@ fun <T> GridView(
                         }
                     }
                 }
-                if (spaceV % chunked.size != 0) {
+                if (spaceV % column != 0) {
                     Spacer(modifier = Modifier.height(space))
                 }
             }

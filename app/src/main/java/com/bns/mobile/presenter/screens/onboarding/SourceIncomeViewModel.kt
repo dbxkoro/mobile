@@ -10,15 +10,16 @@ import androidx.lifecycle.viewModelScope
 import com.bns.mobile.domain.model.Param
 import com.bns.mobile.domain.model.ParamList
 import com.bns.mobile.network.model.params.ParamsDtoRequest
-import com.bns.mobile.repository.params.source.SourceIncomeRepository
+import com.bns.mobile.repository.params.ParamRepository
 import com.bns.mobile.utils.Helper
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 class SourceIncomeViewModel
 @ViewModelInject
 constructor(
-        private val source : SourceIncomeRepository
+        private val source : ParamRepository
 ) : ViewModel() {
 
     private val helper = Helper
@@ -27,21 +28,23 @@ constructor(
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getListSourceIncome() {
-        val idPartner = "Partner-001"
-        val timestamp = helper.getCurrentTime()
-        val signature = helper.createSignature(idPartner, timestamp)
 
-        val requestParam = ParamsDtoRequest(
-                idPartner,
-                timestamp,
-                signature,
-        )
 
         viewModelScope.launch {
-            source.getSourceIncome(requestParam) {
+            val idPartner = "Partner-001"
+            val timestamp = helper.getCurrentTime()
+            val signature = helper.createSignature(idPartner, timestamp)
+
+            val requestParam = ParamsDtoRequest(
+                    idPartner,
+                    timestamp,
+                    signature,
+            )
+
+            source.getSourceParams(requestParam) {
                 if (it?.responseCode == "00") {
-                    listSource.value = it
-                    println("LIST PURPOSE VM :: $it")
+                    val data = Gson().fromJson(it.data.toString(), ParamList::class.java)
+                    listSource.value = data
                 }
             }
         }

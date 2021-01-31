@@ -9,14 +9,16 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bns.mobile.di.module.AppModule.PreferenceProvide
-import com.bns.mobile.domain.model.Auth
+import com.bns.mobile.domain.model.Key
+import com.bns.mobile.domain.model.Result
+import com.bns.mobile.domain.model.Session
 import com.bns.mobile.network.model.auth.AuthDtoRequest
 import com.bns.mobile.network.model.server.KeyDtoRequest
-import com.bns.mobile.presenter.BaseApplication
 import com.bns.mobile.repository.auth.AuthRepository
 import com.bns.mobile.repository.server.KeyRepository
 import com.bns.mobile.utils.Helper
 import com.bns.mobile.utils.RSA
+import com.google.gson.Gson
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,9 +30,6 @@ import java.security.KeyFactory
 import java.security.KeyPair
 import java.security.PublicKey
 import java.security.spec.X509EncodedKeySpec
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.system.measureTimeMillis
 
 @RequiresApi(Build.VERSION_CODES.O)
 class LoginViewModel
@@ -47,7 +46,7 @@ constructor(
     private lateinit var rsaKeypair : KeyPair
 
     val isLoading: MutableState<Boolean> = mutableStateOf(false)
-    val authResponse : MutableState<Auth> = mutableStateOf(Auth())
+    val authResponse : MutableState<Result> = mutableStateOf(Result())
 
 
     fun generateKey() {
@@ -89,24 +88,27 @@ constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     // Return Public Key Server with pem format encoded Base64
     fun requestKey(id: String) {
-//        isFailedRequestKey.value = false
-        val idPartner = "Partner-001"
-        val timestamp = helper.getCurrentTime()
-        val signature = helper.createSignature(idPartner, timestamp)
-        val pbKey = getKey()
-        val keyRequestParams = KeyDtoRequest(
-                PartnerID = idPartner,
-                RequestTimestamp = timestamp,
-                Signature = signature,
-                UserID = id,
-                PublicKey = pbKey,
-        )
         viewModelScope.launch{
+            val idPartner = "Partner-001"
+            val timestamp = helper.getCurrentTime()
+            val signature = helper.createSignature(idPartner, timestamp)
+            val pbKey = async { getKey() }.await()
+            val keyRequestParams = KeyDtoRequest(
+                    PartnerID = idPartner,
+                    RequestTimestamp = timestamp,
+                    Signature = signature,
+                    UserID = id,
+                    PublicKey = pbKey,
+            )
+
+            // TODO: 29/01/21 IMPLEMENT THIS MODEL FOR ALL MODEL 
+
                 keyServer.getKeyServer(keyRequestParams) {
-                    if(it?.publicKey != null) {
-                        publicKeyServer = getPublicKeyServer(it.publicKey)
+                    println("IT :: $it" )
+                    if (it?.responseCode == "00") {
+                        val data = Gson().fromJson(it.data.toString(), Key::class.java)
+                        publicKeyServer = getPublicKeyServer(data.publicKey)
                     }
-                    println("Key Response :: $it")
                 }
         }
     }
@@ -148,28 +150,29 @@ constructor(
 
 
     private fun onLogin(id: String, pw: String) {
-        val idPartner = "Partner-001"
-        val timestamp = helper.getCurrentTime()
-        val signature = helper.createSignature(idPartner, timestamp)
-        val encrypt = encryptPassword(pw)
-        val loginParams = AuthDtoRequest(
-                idPartner,
-                timestamp,
-                signature,
-                encrypt,
-                id
-        )
+
         viewModelScope.launch {
+            val idPartner = "Partner-001"
+            val timestamp = helper.getCurrentTime()
+            val signature = helper.createSignature(idPartner, timestamp)
+            val encrypt = async { encryptPassword(pw) }.await()
+            val loginParams = AuthDtoRequest(
+                    idPartner,
+                    timestamp,
+                    signature,
+                    encrypt,
+                    id
+            )
                 auth.login(loginParams) {
                     authResponse.value = it!!
-                    if(authResponse.value.responseCode == "00") {
-                        setPreferences(id,authResponse.value.sessionId)
-                        BaseApplication.sessionId = it?.sessionId!!
+                    if (it?.responseCode == "00") {
+                        val data = Gson().fromJson(it.data.toString(), Session::class.java)
+                        setPreferences(id, data.sessionId)
                     }
-                    isLoading.value = false
                 }
             delay(1000)
-            authResponse.value = Auth()
+            isLoading.value = false
+            authResponse.value = Result()
         }
     }
 

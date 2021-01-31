@@ -45,7 +45,7 @@ class IncomeScreen : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                val progress = remember { mutableStateOf(0.077f) }
+                val progress = remember { mutableStateOf(0.154f) }
                 val listIncome = viewModel.listIncome.value
                 val selectedIncome = viewModel.selectedIncome.value
 

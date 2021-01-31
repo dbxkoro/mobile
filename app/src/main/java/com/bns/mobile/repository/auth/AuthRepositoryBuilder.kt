@@ -1,10 +1,9 @@
 package com.bns.mobile.repository.auth
 
-import android.util.Log
-import com.bns.mobile.domain.model.Auth
-import com.bns.mobile.network.mapper.AuthDtoMapper
+import com.bns.mobile.domain.model.Result
+import com.bns.mobile.network.mapper.ResultDtoMapper
 import com.bns.mobile.network.model.auth.AuthDtoRequest
-import com.bns.mobile.network.model.auth.AuthDtoResponse
+import com.bns.mobile.network.model.server.ResultDtoResponse
 import com.bns.mobile.network.services.AuthService
 import com.google.gson.Gson
 import retrofit2.Call
@@ -13,44 +12,31 @@ import retrofit2.Response
 
 class AuthRepositoryBuilder (
         private val service : AuthService,
-        private val mapper : AuthDtoMapper,
+        private val mapper : ResultDtoMapper,
 ) : AuthRepository {
 
-    override suspend fun login(request: AuthDtoRequest, onResult: (Auth?) -> Unit) {
+    override suspend fun login(request: AuthDtoRequest, onResult: (Result?) -> Unit) {
         service.login(request).enqueue(
-                object : Callback<AuthDtoResponse> {
-                    override fun onFailure(call: Call<AuthDtoResponse>, t: Throwable) {
+                object : Callback<ResultDtoResponse> {
+                    override fun onFailure(call: Call<ResultDtoResponse>, t: Throwable) {
                         t.printStackTrace()
                         println("error ${t.message}")
                         onResult(null)
                     }
 
-                    override fun onResponse(call: Call<AuthDtoResponse>, response: Response<AuthDtoResponse>) {
-                        var body: Auth? = null
-                        val errorBody = response.errorBody()?.string()
-                        body = if (response.body()?.sessionId == null) {
-                            Gson().fromJson(errorBody, Auth::class.java)
-                        } else {
-                            mapper.mapToDomain(model = response.body())
+                    override fun onResponse(call: Call<ResultDtoResponse>, response: Response<ResultDtoResponse>) {
+                        println("RESPON SERVICE AUTH:: ${response.body()}")
+                        var responseResult: Result
+                        responseResult = when (response.isSuccessful) {
+                            true -> {
+                                mapper.mapToDomain(model = response.body())
+                            }
+                            else -> {
+                                Gson().fromJson(response.errorBody()?.string(), Result::class.java)
+                            }
                         }
-                        Log.d("RESPONSE LOGIN E", "$errorBody")
-                        Log.d("RESPONSE LOGIN", "${body.toString()}")
-
-                        onResult(body)
-
+                        onResult(responseResult)
                     }
-
-//                    NOTE :: THIS CODE HANDLE RETURN ERRORBODY IF Response get Error TO AUTHRESPONSE
-//                    override fun onResponse(call: Call<AuthDtoResponse>, response: Response<AuthDtoResponse>) {
-//                        var body: AuthResponse? = null
-//                        val errorBody = response.errorBody()?.string()
-//                        body = if (response.body()?.sessionId == null) {
-//                            Gson().fromJson(errorBody, AuthResponse::class.java)
-//                        } else {
-//                            mapper.mapToDomainModel(model = response.body())
-//                        }
-//                        onResult(body)
-//                    }
 
                 }
         )

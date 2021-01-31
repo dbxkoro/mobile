@@ -6,26 +6,13 @@ import com.bns.mobile.repository.auth.AuthRepository
 import com.bns.mobile.repository.auth.AuthRepositoryBuilder
 import com.bns.mobile.repository.balance.BalanceRepository
 import com.bns.mobile.repository.balance.BalanceRepositoryBuilder
-import com.bns.mobile.repository.params.city.CityRepository
-import com.bns.mobile.repository.params.city.CityRepositoryBuilder
-import com.bns.mobile.repository.params.degree.DegreeRepository
-import com.bns.mobile.repository.params.degree.DegreeRepositoryBuilder
-import com.bns.mobile.repository.params.income.IncomeRepository
-import com.bns.mobile.repository.params.income.IncomeRepositoryBuilder
-import com.bns.mobile.repository.params.industrial.IndustrialRepository
-import com.bns.mobile.repository.params.industrial.IndustrialRepositoryBuilder
-import com.bns.mobile.repository.params.province.ProvinceRepository
-import com.bns.mobile.repository.params.province.ProvinceRepositoryBuilder
+import com.bns.mobile.repository.params.ParamRepository
+import com.bns.mobile.repository.params.ParamRepositoryBuilder
+
 import com.bns.mobile.repository.proxy.ProxyRepository
 import com.bns.mobile.repository.proxy.ProxyRepositoryBuilder
-import com.bns.mobile.repository.params.purpose.PurposeRepository
-import com.bns.mobile.repository.params.purpose.PurposeRepositoryBuilder
 import com.bns.mobile.repository.server.KeyRepository
 import com.bns.mobile.repository.server.KeyRepositoryBuilder
-import com.bns.mobile.repository.params.source.SourceIncomeRepository
-import com.bns.mobile.repository.params.source.SourceIncomeRepositoryBuilder
-import com.bns.mobile.repository.params.typework.TypeWorkRepository
-import com.bns.mobile.repository.params.typework.TypeWorkRepositoryBuilder
 import com.bns.mobile.repository.user.UserRepository
 import com.bns.mobile.repository.user.UserRepositoryBuilder
 import dagger.Module
@@ -54,11 +41,11 @@ object RepositoryModule {
     @Provides
     fun provideKeyServerRepository(
             keyServerService: KeyServerService,
-            keyServerDtoResponseMapper: KeyDtoMapper,
+            resultServerDtoResponseMapper: ResultDtoMapper,
     ): KeyRepository {
         return KeyRepositoryBuilder(
                 service = keyServerService,
-                mapper = keyServerDtoResponseMapper,
+                mapper = resultServerDtoResponseMapper,
         )
     }
 
@@ -66,7 +53,7 @@ object RepositoryModule {
     @Provides
     fun provideAuthRepository(
             authService: AuthService,
-            authDtoMapper: AuthDtoMapper,
+            authDtoMapper: ResultDtoMapper,
     ): AuthRepository {
         return AuthRepositoryBuilder(
                 service = authService,
@@ -98,99 +85,29 @@ object RepositoryModule {
         )
     }
 
-    @Singleton
+   @Singleton
     @Provides
-    fun provideProvinceRepository(
-        provinceService: ProvinceService,
-        provinceDtoMapper: ParamsDtoMapper
-    ): ProvinceRepository {
-        return ProvinceRepositoryBuilder(
-            service = provinceService,
-            mapper = provinceDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideCityRepository(
-        cityService: CityService,
-        cityDtoMapper: ParamsDtoMapper
-    ): CityRepository {
-        return CityRepositoryBuilder(
-            service = cityService,
-            mapper = cityDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideDegreeRepository(
-        degreeService: DegreeService,
-        degreeDtoMapper: ParamsDtoMapper
-    ): DegreeRepository {
-        return DegreeRepositoryBuilder(
-            service = degreeService,
-            mapper = degreeDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideIncomeRepository(
-        incomeService: IncomeService,
-        incomeDtoMapper: ParamsDtoMapper
-    ): IncomeRepository {
-        return IncomeRepositoryBuilder(
-            service = incomeService,
-            mapper = incomeDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideIndustrialRepository(
-        industryService: IndustryService,
-        industryDtoMapper: ParamsDtoMapper
-    ): IndustrialRepository {
-        return IndustrialRepositoryBuilder(
-            service = industryService,
-            mapper = industryDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun providePurposeRepository(
-        purposeService: PurposeService,
-        purposeDtoMapper: ParamsDtoMapper
-    ): PurposeRepository {
-        return PurposeRepositoryBuilder(
-            service = purposeService,
-            mapper = purposeDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideSourceRepository(
-       sourceIncomeService: SourceIncomeService,
-       sourceIncomeDtoMapper: ParamsDtoMapper
-    ): SourceIncomeRepository {
-        return SourceIncomeRepositoryBuilder(
-            service = sourceIncomeService,
-            mapper = sourceIncomeDtoMapper,
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideWorkRepository(
-       typeWorkService: TypeWorkService,
-       typeWorkDtoMapper: ParamsDtoMapper
-    ): TypeWorkRepository {
-        return TypeWorkRepositoryBuilder(
-            service = typeWorkService,
-            mapper = typeWorkDtoMapper,
+    fun provideParamsRepository(
+           purposeService: PurposeService,
+           provinceService: ProvinceService,
+           cityService: CityService,
+           incomeService: IncomeService,
+           sourceIncomeService: SourceIncomeService,
+           degreeService: DegreeService,
+           industryService: IndustryService,
+           typeWorkService: TypeWorkService,
+           resulMapper: ResultDtoMapper
+    ): ParamRepository {
+        return ParamRepositoryBuilder(
+                purpose = purposeService,
+                province = provinceService,
+                city = cityService,
+                income = incomeService,
+                source = sourceIncomeService,
+                degree = degreeService,
+                industrial = industryService,
+                typework = typeWorkService,
+                mapper = resulMapper,
         )
     }
 

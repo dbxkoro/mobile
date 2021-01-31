@@ -33,7 +33,7 @@ class BottomSheet() : BottomSheetDialogFragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        viewModel.getListWork()
+//        viewModel.getListWork()
 
         return ComposeView(requireContext()).apply { 
             setContent {

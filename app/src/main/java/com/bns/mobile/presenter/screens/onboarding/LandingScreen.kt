@@ -54,7 +54,7 @@ class LandingScreen : Fragment() {
                       }
 
                         Button(onClick = {
-                                         findNavController().navigate(R.id.toPurposeScreen)
+                                         findNavController().navigate(R.id.toEmailValidator)
                                          },
                           shape = RoundedCornerShape(24),
                           modifier = Modifier

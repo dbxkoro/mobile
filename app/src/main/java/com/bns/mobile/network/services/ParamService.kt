@@ -1,6 +1,7 @@
 package com.bns.mobile.network.services
 
 import com.bns.mobile.network.model.params.*
+import com.bns.mobile.network.model.server.ResultDtoResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -12,7 +13,7 @@ interface ProvinceService {
     @POST("param/listprovince")
     fun getListProvince(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface CityService {
@@ -20,15 +21,15 @@ interface CityService {
     @POST("param/listcity")
     fun getListCity(@Header("SessionId") sessionId : String,
                     @Body requestList: CityListDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface DegreeService {
     @Headers("Content-Type: application/json")
     @POST("param/listdegree")
-    fun getListCity(@Header("SessionId") sessionId : String,
+    fun getListDegree(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface IncomeService {
@@ -36,15 +37,15 @@ interface IncomeService {
     @POST("param/listincome")
     fun getListIncome(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface IndustryService {
     @Headers("Content-Type: application/json")
     @POST("param/listindustrialsector")
-    fun getListSector(@Header("SessionId") sessionId : String,
+    fun getListIndustry(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface PurposeService {
@@ -52,7 +53,7 @@ interface PurposeService {
     @POST("param/listopeningpurpose")
     fun getListPurpose(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface SourceIncomeService {
@@ -60,7 +61,7 @@ interface SourceIncomeService {
     @POST("param/listsourceincome")
     fun getListSourceIncome(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
 
 interface TypeWorkService {
@@ -68,5 +69,5 @@ interface TypeWorkService {
     @POST("param/listtypeofwork")
     fun getListWork(@Header("SessionId") sessionId : String,
                     @Body requestList: ParamsDtoRequest
-    ) : Call<ParamsDtoResponse>
+    ) : Call<ResultDtoResponse>
 }
